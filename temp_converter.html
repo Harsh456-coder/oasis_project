@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .input-small {
+      width: 150px;
+      margin: 0 auto;
+      padding: 8px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .input-small::placeholder {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    select option {
+      color: #000;
+    }
+
+    button {
+      background: linear-gradient(45deg, #ff758c, #ff7eb3);
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+      box-shadow: 0 4px 14px rgba(255, 118, 177, 0.5);
+    }
+
+    .result {
+      font-size: 18px;
+      font-weight: bold;
+      min-height: 36px;
+    }
+
+    .error {
+      font-size: 14px;
+      color: #ffcccc;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🌡 Temperature Converter</h2>
+    <input type="number" id="tempInput" class="input-small" placeholder="Temperature" />
+    <select id="unitSelect">
+      <option value="C">Celsius (°C)</option>
+      <option value="F">Fahrenheit (°F)</option>
+      <option value="K">Kelvin (K)</option>
+    </select>
+    <button onclick="convertTemp()">Convert</button>
+    <p class="result" id="result"></p>
+    <p class="error" id="error"></p>
+  </div>
+
+  <script>
+    function convertTemp() {
+      const tempValue = document.getElementById("tempInput").value.trim();
+      const unit = document.getElementById("unitSelect").value;
+      const resultEl = document.getElementById("result");
+      const errorEl = document.getElementById("error");
+
+      resultEl.innerHTML = "";
+      errorEl.innerHTML = "";
+
+      if (tempValue === "" || isNaN(tempValue)) {
+        errorEl.textContent = "⚠ Please enter a valid number.";
+        return;
+      }
+
+      const temp = parseFloat(tempValue);
+      let output = "";
+
+      if (unit === "C") {
+        output = `Fahrenheit: ${(temp * 9 / 5 + 32).toFixed(2)} °F<br>Kelvin: ${(temp + 273.15).toFixed(2)} K`;
+      } else if (unit === "F") {
+        output = `Celsius: ${((temp - 32) * 5 / 9).toFixed(2)} °C<br>Kelvin: ${(((temp - 32) * 5 / 9) + 273.15).toFixed(2)} K`;
+      } else if (unit === "K") {
+        output = `Celsius: ${(temp - 273.15).toFixed(2)} °C<br>Fahrenheit: ${((temp - 273.15) * 9 / 5 + 32).toFixed(2)} °F`;
+      }
+
+      resultEl.innerHTML = output;
+    }
+  </script>
+</body>
+</html>
